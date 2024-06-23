@@ -10,7 +10,7 @@
 <fmt:setLocale value="${sessionScope.locale}" />
 <fmt:setBundle basename="messages" />
 <h1><fmt:message key="signup.title"/></h1>
-<form action="${pageContext.request.contextPath}/auth?action=signup" method="post">
+<form action="${pageContext.request.contextPath}/auth?action=signup" method="post" enctype="multipart/form-data">
     <div>
         <label for="name"><fmt:message key="signup.name"/></label>
         <input type="text" id="name" name="name" required>
@@ -30,6 +30,10 @@
     <div>
         <label for="password"><fmt:message key="signup.password"/></label>
         <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="avatar"><fmt:message key="signup.avatar"/></label>
+        <input type="file" id="avatar" name="avatar">
     </div>
     <button type="submit"><fmt:message key="signup.button"/></button>
 </form>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://example.com/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,9 @@
 <fmt:setBundle basename="messages" />
 <h1><fmt:message key="profile.title"/></h1>
 <div>
+    <c:if test="${user.avatar != null}">
+        <img src="data:image/jpeg;base64,${fn:base64Encode(user.avatar)}" alt="User Avatar"/>
+    </c:if>
     <p><fmt:message key="profile.name"/>: ${user.name}</p>
     <p><fmt:message key="profile.surname"/>: ${user.surname}</p>
     <p><fmt:message key="profile.nickname"/>: ${user.nickname}</p>

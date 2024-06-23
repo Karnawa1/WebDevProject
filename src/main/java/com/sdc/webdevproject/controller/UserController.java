@@ -5,10 +5,12 @@ import com.sdc.webdevproject.exception.UserNotFoundException;
 import com.sdc.webdevproject.service.UserService;
 import com.sdc.webdevproject.service.impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -16,6 +18,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/users")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10,      // 10MB
+        maxRequestSize = 1024 * 1024 * 50    // 50MB
+)
 public class UserController extends HttpServlet {
 
     private final UserService userService = new UserServiceImpl();
@@ -144,6 +151,13 @@ public class UserController extends HttpServlet {
         user.setNickname(req.getParameter("nickname"));
         user.setPassword(req.getParameter("password"));
         user.setEmail(req.getParameter("email"));
+
+        // Handling file upload
+        Part filePart = req.getPart("avatar");
+        if (filePart != null && filePart.getSize() > 0) {
+            byte[] avatar = filePart.getInputStream().readAllBytes();
+            user.setAvatar(avatar);
+        }
 
         userService.updateUser(user);
         Logger.info("User updated successfully: {}", user.getEmail());

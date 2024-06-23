@@ -9,6 +9,7 @@ public class User {
     private String email;
     private String confirmationToken;
     private boolean isEnabled;
+    private byte[] avatar;
 
     public Long getId() {
         return id;
@@ -72,5 +73,13 @@ public class User {
 
     public void setEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 }

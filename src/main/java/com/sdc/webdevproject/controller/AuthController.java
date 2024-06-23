@@ -5,16 +5,23 @@ import com.sdc.webdevproject.exception.AuthException;
 import com.sdc.webdevproject.service.AuthService;
 import com.sdc.webdevproject.service.impl.AuthServiceImpl;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/auth")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10,      // 10MB
+        maxRequestSize = 1024 * 1024 * 50    // 50MB
+)
 public class AuthController extends HttpServlet {
 
     private final AuthService authService = new AuthServiceImpl();
@@ -106,6 +113,13 @@ public class AuthController extends HttpServlet {
         user.setNickname(req.getParameter("nickname"));
         user.setPassword(req.getParameter("password"));
         user.setEmail(req.getParameter("email"));
+
+        // Handling file upload
+        Part filePart = req.getPart("avatar");
+        if (filePart != null && filePart.getSize() > 0) {
+            byte[] avatar = filePart.getInputStream().readAllBytes();
+            user.setAvatar(avatar);
+        }
 
         authService.signUp(user);
         Logger.info("User signed up successfully: {}", user.getEmail());

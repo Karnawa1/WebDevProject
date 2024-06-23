@@ -10,7 +10,7 @@
 <fmt:setLocale value="${sessionScope.locale}" />
 <fmt:setBundle basename="messages" />
 <h1><fmt:message key="user.edit.title"/></h1>
-<form action="${pageContext.request.contextPath}/users?action=edit" method="post">
+<form action="${pageContext.request.contextPath}/users?action=edit" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="${user.id}">
     <div>
         <label for="name"><fmt:message key="user.edit.name"/></label>
@@ -32,7 +32,11 @@
         <label for="email"><fmt:message key="user.edit.email"/></label>
         <input type="email" id="email" name="email" value="${user.email}" required>
     </div>
-    <button type="submit"><fmt:message key="user.edit.button"/></button>
+    <div>
+        <label for="avatar"><fmt:message key="signup.avatar"/></label>
+        <input type="file" id="avatar" name="avatar">
+    </div>
+    <button type="submit"><fmt:message key="signup.button"/></button>
 </form>
 <div>
     <a href="?lang=en">English</a>

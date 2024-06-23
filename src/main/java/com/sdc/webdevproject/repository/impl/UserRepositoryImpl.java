@@ -127,7 +127,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void save(User user) throws SQLException {
         Logger.debug("Saving user: {}", user);
-        String sql = "INSERT INTO users (name, surname, nickname, password, email, confirmation_token, is_enabled) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (name, surname, nickname, password, email, confirmation_token, is_enabled, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DatabasePool.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, user.getName());
@@ -137,6 +137,7 @@ public class UserRepositoryImpl implements UserRepository {
             pstmt.setString(5, user.getEmail());
             pstmt.setString(6, user.getConfirmationToken());
             pstmt.setBoolean(7, user.isEnabled());
+            pstmt.setBytes(8, user.getAvatar()); // Set avatar data
             pstmt.executeUpdate();
         }
     }
@@ -144,7 +145,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void update(User user) throws SQLException {
         Logger.debug("Updating user: {}", user);
-        String sql = "UPDATE users SET name=?, surname=?, nickname=?, password=?, email=?, confirmation_token=?, is_enabled=? WHERE id=?";
+        String sql = "UPDATE users SET name=?, surname=?, nickname=?, password=?, email=?, confirmation_token=?, is_enabled=?, avatar=? WHERE id=?";
         try (Connection connection = DatabasePool.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, user.getName());
@@ -154,7 +155,8 @@ public class UserRepositoryImpl implements UserRepository {
             pstmt.setString(5, user.getEmail());
             pstmt.setString(6, user.getConfirmationToken());
             pstmt.setBoolean(7, user.isEnabled());
-            pstmt.setLong(8, user.getId());
+            pstmt.setBytes(8, user.getAvatar()); // Set avatar data
+            pstmt.setLong(9, user.getId());
             pstmt.executeUpdate();
         }
     }
@@ -180,6 +182,7 @@ public class UserRepositoryImpl implements UserRepository {
         user.setEmail(rs.getString("email"));
         user.setConfirmationToken(rs.getString("confirmation_token"));
         user.setEnabled(rs.getBoolean("is_enabled"));
+        user.setAvatar(rs.getBytes("avatar")); // Map avatar data
         return user;
     }
 }
