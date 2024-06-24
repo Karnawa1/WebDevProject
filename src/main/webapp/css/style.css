@@ -7,6 +7,10 @@ body {
     background: #404040;
 }
 
+h1 {
+    margin: 0;
+}
+
 .flexbox {
     display: flex;
     flex-direction: column;
@@ -47,9 +51,55 @@ body {
 .user-info {
     margin: auto;
     width: 60%;
-    height: 30%;
-    justify-content: center;
+    max-width: 900px;
+    padding: 20px;
+    background: #303030;
     border: 2px solid #181818;
     border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: #fff;
+    text-align: center;
+}
+
+.user-info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.user-info th, .user-info td {
+    padding: 10px;
+    border: 1px solid #555;
+    text-align: left;
+}
+
+.user-info th {
+    background: #181818;
+    font-weight: bold;
+}
+
+.user-info td {
+    background: #404040;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    color: #fffe7d;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    margin: 20px 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+    color: #fff;
+    background-color: #45a049;
 }

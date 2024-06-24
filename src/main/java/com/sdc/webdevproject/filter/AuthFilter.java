@@ -8,9 +8,15 @@ import jakarta.servlet.http.HttpSession;
 import org.tinylog.Logger;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @WebFilter("/*")
 public class AuthFilter implements Filter {
+
+    private static final List<String> ALLOWED_PATHS = Arrays.asList(
+            "/css/", "/js/", "/images/", "/auth", "/auth/signup", "/auth?action=signup"
+    );
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -23,16 +29,17 @@ public class AuthFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        String loginURI = req.getContextPath() + "/auth";
-        boolean loggedIn = session != null && session.getAttribute("user") != null;
-        boolean loginRequest = req.getRequestURI().equals(loginURI) || req.getRequestURI().equals(loginURI + "/signup");
+        String path = req.getRequestURI().substring(req.getContextPath().length()).replaceAll("[/]+$", "");
 
-        if (loggedIn || loginRequest || req.getMethod().equalsIgnoreCase("POST")) {
-            Logger.debug("User is logged in or accessing login page, proceeding with request");
+        boolean loggedIn = session != null && session.getAttribute("user") != null;
+        boolean allowedPath = ALLOWED_PATHS.stream().anyMatch(path::startsWith);
+
+        if (loggedIn || allowedPath) {
+            Logger.debug("User is logged in or accessing allowed path, proceeding with request");
             chain.doFilter(request, response);
         } else {
             Logger.warn("User is not logged in, redirecting to login page");
-            resp.sendRedirect(loginURI);
+            resp.sendRedirect(req.getContextPath() + "/auth?action=signin");
         }
     }
 

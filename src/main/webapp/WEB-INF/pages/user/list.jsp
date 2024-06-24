@@ -45,6 +45,5 @@
         <a href="${pageContext.request.contextPath}/users?page=${i}">${i}</a>
     </c:forEach>
 </div>
-<a href="${pageContext.request.contextPath}/users?action=create"><fmt:message key="user.list.actions.create"/></a>
 </body>
 </html>

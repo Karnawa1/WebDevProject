@@ -1,0 +1,75 @@
+.profile-block {
+    margin: 10% auto 0;
+    width: 50%;
+    height: 40%;
+    border: 2px solid #181818;
+    border-radius: 20px;
+    background-color: #3b3b3b;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    text-align: center;
+}
+
+.profile__localization {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 10vh;
+    font-size: 1.4vh;
+}
+
+.profile__localization a {
+    text-decoration: none;
+    color: #fffe7d;
+}
+
+.profile__image {
+    width: 28vh;
+    height: 28vh;
+    border-radius: 50%;
+    border: 3px solid #181818;
+    margin-top: -15vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.profile__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile__info p {
+    color: #fff;
+    font-size: 3vh;
+    margin: 10px 0;
+}
+
+.profile__links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.profile__links a {
+    color: #fffe7d;
+    font-size: 2vh;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.profile__links a:hover {
+    text-decoration: underline;
+    color: #fff;
+    background-color: #45a049;
+}

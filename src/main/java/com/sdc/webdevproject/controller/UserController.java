@@ -68,9 +68,6 @@ public class UserController extends HttpServlet {
                 listUsers(req, resp);
             } else {
                 switch (action) {
-                    case "create":
-                        createUser(req, resp);
-                        break;
                     case "edit":
                         updateUser(req, resp);
                         break;
@@ -108,20 +105,6 @@ public class UserController extends HttpServlet {
     private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Logger.debug("Showing create user form");
         req.getRequestDispatcher("/WEB-INF/pages/user/create.jsp").forward(req, resp);
-    }
-
-    private void createUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        Logger.debug("Creating new user");
-        User user = new User();
-        user.setName(req.getParameter("name"));
-        user.setSurname(req.getParameter("surname"));
-        user.setNickname(req.getParameter("nickname"));
-        user.setPassword(req.getParameter("password"));
-        user.setEmail(req.getParameter("email"));
-
-        userService.createUser(user);
-        Logger.info("User created successfully: {}", user.getEmail());
-        resp.sendRedirect(req.getContextPath() + "/users");
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

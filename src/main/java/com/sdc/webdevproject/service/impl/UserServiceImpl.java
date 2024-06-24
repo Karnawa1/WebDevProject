@@ -54,13 +54,14 @@ public class UserServiceImpl implements UserService {
             if (existingUser == null) {
                 throw new UserNotFoundException("User not found for ID: " + user.getId());
             }
-            if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-                if (!PasswordUtil.verifyPassword(user.getPassword(), existingUser.getPassword())) {
-                    user.setPassword(PasswordUtil.encryptPassword(user.getPassword()));
-                }
+            if (user.getPassword() == null || user.getPassword().isEmpty()) {
+                throw new IllegalArgumentException("Password cannot be empty");
+            } else if (!PasswordUtil.verifyPassword(user.getPassword(), existingUser.getPassword())) {
+                throw new IllegalArgumentException("Incorrect password");
             } else {
-                user.setPassword(existingUser.getPassword());
-            }
+            user.setPassword(PasswordUtil.encryptPassword(user.getPassword()));
+        }
+
             if (!isUniqueNickname(user.getNickname(), user.getId())) {
                 throw new IllegalArgumentException("Nickname already in use");
             }

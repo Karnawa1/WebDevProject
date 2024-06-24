@@ -5,11 +5,15 @@
 <html>
 <head>
     <title>Edit User</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/edit.css">
 </head>
 <body>
 <fmt:setLocale value="${sessionScope.locale}" />
 <fmt:setBundle basename="messages" />
-<h1><fmt:message key="user.edit.title"/></h1>
+<header class="header flexbox">
+    <h1><fmt:message key="user.edit.title"/></h1>
+</header>
 <form action="${pageContext.request.contextPath}/users?action=edit" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="${user.id}">
     <div>
@@ -36,9 +40,9 @@
         <label for="avatar"><fmt:message key="signup.avatar"/></label>
         <input type="file" id="avatar" name="avatar">
     </div>
-    <button type="submit"><fmt:message key="signup.button"/></button>
+    <button type="submit"><fmt:message key="user.edit.button"/></button>
 </form>
-<div>
+<div class="language-links">
     <a href="?lang=en">English</a>
     <a href="?lang=ru">Русский</a>
 </div>
